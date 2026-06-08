@@ -1,0 +1,50 @@
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 20px;
+  transition: background 0.3s ease-in-out;
+}
+
+.toggleBtn:focus-visible {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+.icon {
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.track {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 12px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.toggleBtn[aria-checked='true'] .track {
+  background-color: #4a90e2;
+}
+
+.thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.thumbDark {
+  transform: translateX(20px);
+}

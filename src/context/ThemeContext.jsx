@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { trackThemeToggle, trackInitialTheme } from '../analytics/trackTheme';
 
 const ThemeContext = createContext();
 
@@ -14,11 +15,20 @@ export function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(getInitialTheme);
 
   useEffect(() => {
+    trackInitialTheme(isDark);
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
     document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark(prev => !prev);
+  const toggleTheme = () => {
+    setIsDark(prev => {
+      trackThemeToggle(!prev);
+      return !prev;
+    });
+  };
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

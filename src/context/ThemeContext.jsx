@@ -2,13 +2,19 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
+const STORAGE_KEY = 'theme';
+
+function getInitialTheme() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) return stored === 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 export function ThemeProvider({ children }) {
-  const [isDark, setIsDark] = useState(() => {
-    return localStorage.getItem('theme') === 'dark';
-  });
+  const [isDark, setIsDark] = useState(getInitialTheme);
 
   useEffect(() => {
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
     document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
